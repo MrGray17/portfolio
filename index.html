@@ -19,18 +19,20 @@
       .then((html) => {
         const withStyles = html.replace(
           '</head>',
-          '<link rel="stylesheet" href="experience-preview.css?v=3"></head>'
+          '<link rel="stylesheet" href="experience-preview.css?v=4"></head>'
         );
-        const withExperience = withStyles.replace(
-          '</body>',
-          '<script src="portfolio-experience.js?v=3"><\\/script></body>'
-        );
+        const gameScript = '<script src="portfolio-experience.js?v=4"></' + 'script>';
+        const withExperience = withStyles.replace('</body>', gameScript + '</body>');
         document.open();
         document.write(withExperience);
         document.close();
       })
       .catch((error) => {
-        document.body.innerHTML = '<div class="boot-error"><strong>Portfolio failed to load.</strong><br>' + error.message + '</div>';
+        document.body.replaceChildren();
+        const box = document.createElement('div');
+        box.className = 'boot-error';
+        box.textContent = 'Portfolio failed to load: ' + error.message;
+        document.body.append(box);
       });
   </script>
 </body>
