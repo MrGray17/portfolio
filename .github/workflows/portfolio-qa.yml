@@ -1,0 +1,50 @@
+name: Portfolio QA
+
+on:
+  push:
+    branches: [portfolio-experience-safe]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install test dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: JavaScript syntax checks
+        run: |
+          node --check personalize-fixed.js
+          node --check seo-fixed.js
+          node --check games-fixed.js
+          node --check script.js
+          node --check playwright.config.js
+          node --check tests/portfolio.spec.js
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run launch QA
+        run: npm test
+
+      - name: Upload Playwright report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          if-no-files-found: ignore
