@@ -19,7 +19,7 @@ function diagnostics(page) {
 
 async function loadMain(page) {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await page.waitForFunction(() => document.body.classList.contains('experience-personalized'));
+  await page.waitForFunction(() => Boolean(document.body && document.body.classList.contains('experience-personalized')));
   await page.waitForFunction(() => Boolean(window.yazidGames));
   await page.waitForTimeout(1400);
 }
