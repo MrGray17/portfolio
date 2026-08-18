@@ -35,6 +35,7 @@ jobs:
           node --check script.js
           node --check playwright.config.js
           node --check tests/portfolio.spec.js
+          node --check tests/launch-extras.spec.js
 
       - name: Install Chromium
         run: npx playwright install chromium
