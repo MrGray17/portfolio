@@ -10,16 +10,17 @@
   <meta name="robots" content="index, follow">
   <meta property="og:type" content="website">
   <meta property="og:title" content="El Yazid Hammoubel | Software Engineering Student">
-  <meta property="og:description" content="Building real full-stack, backend and systems projects from Morocco.">
+  <meta property="og:description" content="A playable engineering portfolio: real projects, small simulations, and the code behind them.">
   <meta property="og:image" content="image/img3.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="El Yazid Hammoubel | Software Engineering Student">
-  <meta name="twitter:description" content="Building real full-stack, backend and systems projects from Morocco.">
+  <meta name="twitter:description" content="A playable engineering portfolio: real projects, small simulations, and the code behind them.">
   <meta name="twitter:image" content="image/img3.jpg">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="neo-styles.css">
+  <link rel="stylesheet" href="games.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Space+Mono:wght@400;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
   <script type="application/ld+json">
@@ -84,6 +85,11 @@
           </div>
         </div>
 
+        <div class="playable-banner">
+          <div><strong>THIS PORTFOLIO IS PLAYABLE.</strong><br><span>Each featured project has a tiny simulation of the problem it solves.</span></div>
+          <span data-experience-progress>0/3 SYSTEMS SOLVED</span>
+        </div>
+
         <div class="tech-badges" style="margin-top:2rem;">
           <span class="tech-badge"><i class="fab fa-python"></i> Python</span>
           <span class="tech-badge"><i class="fas fa-code"></i> C</span>
@@ -115,7 +121,7 @@
           </p>
           <p>
             I'm still a student, so this portfolio is deliberately about <strong>work I can explain and defend</strong>, not a wall of inflated skill bars.
-            Every project here is either something I'm actively building or something whose code is public enough to inspect.
+            The playable parts below are metaphors; the linked repositories are the evidence.
           </p>
         </div>
       </div>
@@ -124,12 +130,12 @@
     <section class="section section-compact" id="projects">
       <div class="container creator-showcase">
         <p class="section-number">02 / PROJECTS</p>
-        <p class="creator-label">Projects I'm Actually Building</p>
+        <p class="creator-label">Pick a project. Then play the problem.</p>
         <div class="creator-projects-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
-          <article class="creator-item">
-            <a href="https://github.com/MrGray17/rate-limiter" target="_blank" rel="noreferrer" class="creator-project">
+          <article class="creator-item" data-project-card="rate-limiter">
+            <button class="creator-project project-title-button" data-project-overview="rate-limiter">
               <span class="creator-name"><i class="fas fa-gauge-high"></i> Rate Limiter</span>
-            </a>
+            </button>
             <p class="creator-tagline">
               A TypeScript + Node.js rate limiter built from first principles. The current implementation covers fixed-window request limiting,
               HTTP integration, rejection behavior, window resets, and tests. Next: more algorithms, distributed state, and benchmarking.
@@ -137,13 +143,16 @@
             <div class="tech-badges">
               <span class="tech-badge">TypeScript</span><span class="tech-badge">Node.js</span><span class="tech-badge">HTTP</span><span class="tech-badge">Testing</span>
             </div>
-            <a href="https://github.com/MrGray17/rate-limiter" target="_blank" rel="noreferrer" class="creator-github"><i class="fab fa-github"></i> View repository</a>
+            <div class="project-experience-actions">
+              <button class="experience-button" data-open-project="rate-limiter"><i class="fas fa-gamepad"></i> PLAY PACKET PANIC</button>
+              <a href="https://github.com/MrGray17/rate-limiter" target="_blank" rel="noreferrer" class="creator-github"><i class="fab fa-github"></i> Code ↗</a>
+            </div>
           </article>
 
-          <article class="creator-item">
-            <a href="https://github.com/MrGray17/Maw3id" target="_blank" rel="noreferrer" class="creator-project">
+          <article class="creator-item" data-project-card="maw3id">
+            <button class="creator-project project-title-button" data-project-overview="maw3id">
               <span class="creator-name"><i class="fas fa-hospital-user"></i> Maw3id</span>
-            </a>
+            </button>
             <p class="creator-tagline">
               A clinic queue and appointment platform designed around how Moroccan clinics actually work: receptionist-managed appointments and walk-ins,
               one daily queue, doctor workflow, and nearby-doctor discovery.
@@ -151,13 +160,16 @@
             <div class="tech-badges">
               <span class="tech-badge">React</span><span class="tech-badge">TypeScript</span><span class="tech-badge">Express</span><span class="tech-badge">PostgreSQL</span><span class="tech-badge">MapLibre</span>
             </div>
-            <a href="https://github.com/MrGray17/Maw3id" target="_blank" rel="noreferrer" class="creator-github"><i class="fab fa-github"></i> View repository</a>
+            <div class="project-experience-actions">
+              <button class="experience-button" data-open-project="maw3id"><i class="fas fa-gamepad"></i> PLAY QUEUE CHAOS</button>
+              <a href="https://github.com/MrGray17/Maw3id" target="_blank" rel="noreferrer" class="creator-github"><i class="fab fa-github"></i> Code ↗</a>
+            </div>
           </article>
 
-          <article class="creator-item">
-            <a href="https://github.com/MrGray17/opentoken" target="_blank" rel="noreferrer" class="creator-project">
+          <article class="creator-item" data-project-card="opentoken">
+            <button class="creator-project project-title-button" data-project-overview="opentoken">
               <span class="creator-name"><i class="fas fa-compress-alt"></i> OpenToken</span>
-            </a>
+            </button>
             <p class="creator-tagline">
               Open-source TypeScript/Bun tooling exploring token compression for AI workflows. Structured as a monorepo with automated type checking,
               linting, regex-safety checks, and tests.
@@ -165,7 +177,10 @@
             <div class="tech-badges">
               <span class="tech-badge">TypeScript</span><span class="tech-badge">Bun</span><span class="tech-badge">Open Source</span><span class="tech-badge">Testing</span>
             </div>
-            <a href="https://github.com/MrGray17/opentoken" target="_blank" rel="noreferrer" class="creator-github"><i class="fab fa-github"></i> View repository</a>
+            <div class="project-experience-actions">
+              <button class="experience-button" data-open-project="opentoken"><i class="fas fa-gamepad"></i> PLAY CONTEXT CRUNCH</button>
+              <a href="https://github.com/MrGray17/opentoken" target="_blank" rel="noreferrer" class="creator-github"><i class="fab fa-github"></i> Code ↗</a>
+            </div>
           </article>
         </div>
       </div>
@@ -176,18 +191,9 @@
         <p class="section-number">03 / STACK</p>
         <h2>Tools I use — not a made-up mastery meter.</h2>
         <div class="creator-projects-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem;">
-          <div class="creator-item">
-            <h3>Languages</h3>
-            <p>Python · C · JavaScript · TypeScript · SQL · HTML · CSS</p>
-          </div>
-          <div class="creator-item">
-            <h3>Web / Backend</h3>
-            <p>Node.js · Express · React · REST/HTTP · PostgreSQL</p>
-          </div>
-          <div class="creator-item">
-            <h3>Foundations / Tools</h3>
-            <p>Git · GitHub · Linux · Networks & Telecommunications · Testing</p>
-          </div>
+          <div class="creator-item"><h3>Languages</h3><p>Python · C · JavaScript · TypeScript · SQL · HTML · CSS</p></div>
+          <div class="creator-item"><h3>Web / Backend</h3><p>Node.js · Express · React · REST/HTTP · PostgreSQL</p></div>
+          <div class="creator-item"><h3>Foundations / Tools</h3><p>Git · GitHub · Linux · Networks & Telecommunications · Testing</p></div>
         </div>
       </div>
     </section>
@@ -207,7 +213,7 @@
         <div class="timeline-item-flat" data-country="Morocco">
           <div class="timeline-dot"></div>
           <div class="timeline-content-flat">
-            <h4 class="timeline-title">Engineering Internship Project @ Atos</h4>
+            <h4 class="timeline-title">Engineering Internship @ Atos</h4>
             <p class="timeline-date">2026</p>
             <p class="timeline-description">Worked on automation around a Maroc Telecom Jira workflow, including an AI-assisted component and PostgreSQL-backed data handling.</p>
             <p class="timeline-location"><i class="fas fa-map-marker-alt"></i> Morocco</p>
@@ -241,5 +247,34 @@
   <footer class="container" style="padding:2rem 0 3rem;">
     <p>Built as an evolving engineering portfolio — claims should survive the interview.</p>
   </footer>
+
+  <div class="experience-progress-pill" data-experience-progress>0/3 SYSTEMS SOLVED</div>
+
+  <div class="experience-modal" id="project-experience" aria-hidden="true">
+    <div class="experience-backdrop"></div>
+    <section class="experience-shell" role="dialog" aria-modal="true" aria-labelledby="experience-title">
+      <header class="experience-header">
+        <div>
+          <p class="experience-kicker" id="experience-kicker">PROJECT EXPERIENCE</p>
+          <h2 id="experience-title">Project</h2>
+        </div>
+        <button class="experience-close" data-close-experience aria-label="Close project experience">×</button>
+      </header>
+      <nav class="experience-tabs" aria-label="Project experience sections">
+        <button data-experience-tab="overview">OVERVIEW</button>
+        <button data-experience-tab="play" class="is-active">PLAY</button>
+        <button data-experience-tab="architecture">ARCHITECTURE</button>
+        <button data-experience-tab="code">CODE ↗</button>
+      </nav>
+      <div class="experience-stage" id="experience-stage"></div>
+    </section>
+  </div>
+
+  <div class="experience-achievement" id="experience-achievement" aria-live="polite">
+    <strong>🏆 RECRUITER% SPEEDRUN COMPLETE</strong>
+    <span>You solved all three project systems. There is no prize. There is, however, source code.</span>
+  </div>
+
+  <script src="games.js"></script>
 </body>
 </html>
