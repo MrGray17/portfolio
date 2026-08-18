@@ -19,12 +19,13 @@
       .then((html) => {
         const withStyles = html.replace(
           '</head>',
-          '<link rel="stylesheet" href="experience-preview.css?v=10"><link rel="stylesheet" href="project-title-fix.css?v=10"></head>'
+          '<link rel="stylesheet" href="experience-preview.css?v=11"><link rel="stylesheet" href="project-title-fix.css?v=11"></head>'
         );
-        const personalizeScript = '<script src="personalize-fixed.js?v=10"></' + 'script>';
-        const seoScript = '<script src="seo-fixed.js?v=10"></' + 'script>';
-        const gamesScript = '<script src="games-fixed.js?v=10"></' + 'script>';
-        const withExperience = withStyles.replace('</body>', personalizeScript + seoScript + gamesScript + '</body>');
+        const personalizeScript = '<script src="personalize-fixed.js?v=11"></' + 'script>';
+        const seoScript = '<script src="seo-fixed.js?v=11"></' + 'script>';
+        const gamesScript = '<script src="games-fixed.js?v=11"></' + 'script>';
+        const gameUiScript = '<script src="game-ui-stability.js?v=11"></' + 'script>';
+        const withExperience = withStyles.replace('</body>', personalizeScript + seoScript + gamesScript + gameUiScript + '</body>');
         document.open();
         document.write(withExperience);
         document.close();
