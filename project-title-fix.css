@@ -1,0 +1,23 @@
+.experience-project-card .project-title-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 1rem !important;
+  width: 100% !important;
+  min-height: 100px !important;
+  padding: 1rem 2rem !important;
+  margin-bottom: 1rem !important;
+  background: var(--yellow) !important;
+  color: #000 !important;
+  border: 4px solid var(--border) !important;
+  box-shadow: 6px 6px 0 var(--border) !important;
+}
+
+.experience-project-card .project-title-button .creator-name {
+  color: #000 !important;
+}
+
+.experience-project-card .project-title-button:hover {
+  transform: translate(3px, 3px) !important;
+  box-shadow: 3px 3px 0 var(--border) !important;
+}

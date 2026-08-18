@@ -1,0 +1,323 @@
+body.experience-open { overflow: hidden; }
+
+/* Keep the journey map clean: no pirate image and no profile photo overlay. */
+.map-pirate-overlay,
+.map-profile-overlay {
+  display: none !important;
+}
+
+.experience-project-grid {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.experience-project-card { position: relative; }
+
+.project-status-strip {
+  display: flex;
+  justify-content: space-between;
+  gap: .75rem;
+  margin-bottom: .7rem;
+  font-family: 'Space Mono', monospace;
+  font-size: .72rem;
+  font-weight: 700;
+}
+
+.project-signal {
+  background: var(--yellow);
+  border: 2px solid #000;
+  padding: .12rem .35rem;
+  color: #000;
+}
+
+.project-title-button {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.project-title-button:hover .creator-name { text-decoration: underline; }
+
+.project-experience-actions {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.experience-button,
+.game-primary,
+.game-secondary,
+.game-actions button {
+  border: 3px solid #000;
+  box-shadow: 4px 4px 0 #000;
+  color: #000;
+  font: 800 .85rem 'Space Grotesk', sans-serif;
+  padding: .72rem .9rem;
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.experience-button,
+.game-primary { background: var(--yellow); }
+.game-secondary { background: var(--white); color: var(--text); border-color: var(--border); box-shadow: 4px 4px 0 var(--border); }
+.game-actions button { background: var(--cyan); }
+.game-actions button.danger { background: var(--pink); }
+
+.experience-button:hover,
+.game-primary:hover,
+.game-secondary:hover,
+.game-actions button:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #000;
+}
+
+.project-experience-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 30000;
+  display: none;
+  place-items: center;
+  padding: 22px;
+}
+
+.project-experience-modal.is-open { display: grid; }
+
+.experience-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: rgba(0, 0, 0, .72);
+  cursor: default;
+}
+
+.experience-window {
+  position: relative;
+  z-index: 1;
+  width: min(940px, 96vw);
+  max-height: 92vh;
+  overflow: auto;
+  background: var(--white);
+  color: var(--text);
+  border: 5px solid var(--border);
+  box-shadow: 12px 12px 0 #000;
+}
+
+.experience-window-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 1.25rem;
+  background: var(--yellow);
+  color: #000;
+  border-bottom: 4px solid #000;
+}
+
+.experience-window-head small {
+  font: 800 .7rem 'Space Mono', monospace;
+  letter-spacing: .04em;
+}
+
+.experience-window-head h2 {
+  margin: .15rem 0 0;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1;
+}
+
+.experience-close {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  border: 3px solid #000;
+  background: #fff;
+  color: #000;
+  box-shadow: 3px 3px 0 #000;
+  font-size: 1.5rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.experience-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 4px solid var(--border);
+}
+
+.experience-tabs button {
+  padding: .8rem .5rem;
+  border: 0;
+  border-right: 3px solid var(--border);
+  background: var(--white);
+  color: var(--text);
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.experience-tabs button:last-child { border-right: 0; }
+.experience-tabs button.is-active { background: var(--cyan); color: #000; }
+
+.experience-stage {
+  min-height: 420px;
+  padding: 1.4rem;
+}
+
+.experience-copy { max-width: 760px; margin: 0 auto; }
+.experience-copy h3, .game-result h3 { margin: 1rem 0 .65rem; font-size: clamp(1.5rem, 3vw, 2rem); }
+.experience-copy p { font-size: 1rem; line-height: 1.65; }
+
+.experience-sticker {
+  display: inline-block;
+  background: var(--pink);
+  color: #000;
+  border: 3px solid #000;
+  padding: .34rem .55rem;
+  font: 800 .72rem 'Space Mono', monospace;
+  transform: rotate(-1deg);
+}
+
+.architecture-stack {
+  display: grid;
+  gap: .75rem;
+  margin-top: 1rem;
+}
+
+.architecture-row {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: .8rem;
+  align-items: start;
+  padding: .8rem;
+  border: 3px solid var(--border);
+  box-shadow: 4px 4px 0 var(--border);
+}
+
+.architecture-row span { font: 900 .85rem 'Space Mono', monospace; }
+.architecture-row p { margin: 0; }
+
+.game-shell { display: grid; gap: 1rem; }
+.game-intro { display: grid; gap: .75rem; }
+.game-intro p { margin: 0; line-height: 1.55; }
+
+.game-hud {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: .65rem;
+}
+
+.game-stat {
+  display: grid;
+  gap: .2rem;
+  padding: .65rem .75rem;
+  background: var(--white);
+  border: 3px solid var(--border);
+  box-shadow: 3px 3px 0 var(--border);
+}
+
+.game-stat span { font: 700 .68rem 'Space Mono', monospace; opacity: .75; }
+.game-stat strong { font-size: 1.15rem; }
+
+.game-card {
+  display: grid;
+  gap: .75rem;
+  padding: 1rem;
+  background: var(--white);
+  border: 4px solid var(--border);
+  box-shadow: 6px 6px 0 var(--border);
+}
+
+.game-card p, .game-card h4 { margin: 0; }
+.game-emoji { font-size: 3rem; }
+
+.game-actions,
+.result-actions {
+  display: flex;
+  gap: .65rem;
+  flex-wrap: wrap;
+  margin-top: .25rem;
+}
+
+.queue-list { display: grid; gap: .75rem; }
+.patient-card { grid-template-columns: 1fr auto; align-items: center; }
+.patient-card .game-actions { justify-content: flex-end; }
+
+.token-card h4 { font-size: 1.35rem; }
+
+.game-result {
+  display: grid;
+  gap: 1rem;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: .7rem;
+}
+
+.result-grid > div {
+  display: grid;
+  gap: .25rem;
+  padding: .75rem;
+  border: 3px solid var(--border);
+  box-shadow: 3px 3px 0 var(--border);
+}
+
+.result-grid span { font: 700 .68rem 'Space Mono', monospace; }
+.result-grid strong { font-size: 1.15rem; }
+
+.game-link { text-decoration: none; }
+
+.experience-progress-badge {
+  position: fixed;
+  right: 24px;
+  bottom: 22px;
+  z-index: 15000;
+  padding: .65rem .85rem;
+  background: var(--white);
+  color: var(--text);
+  border: 4px solid var(--border);
+  box-shadow: 5px 5px 0 var(--border);
+  font: 800 .72rem 'Space Mono', monospace;
+  cursor: pointer;
+}
+
+.experience-achievement {
+  position: fixed;
+  left: 50%;
+  top: 20px;
+  z-index: 32000;
+  display: grid;
+  gap: .2rem;
+  padding: .9rem 1.1rem;
+  background: var(--yellow);
+  color: #000;
+  border: 4px solid #000;
+  box-shadow: 7px 7px 0 #000;
+  transform: translate(-50%, -180%);
+  transition: transform .3s ease;
+}
+
+.experience-achievement.show { transform: translate(-50%, 0); }
+
+@media (max-width: 700px) {
+  .project-experience-modal { padding: 8px; }
+  .experience-window { width: 100%; max-height: 95vh; }
+  .experience-tabs { grid-template-columns: repeat(2, 1fr); }
+  .experience-tabs button:nth-child(2) { border-right: 0; }
+  .experience-tabs button:nth-child(-n+2) { border-bottom: 3px solid var(--border); }
+  .experience-stage { padding: 1rem; min-height: 380px; }
+  .patient-card { grid-template-columns: 1fr; }
+  .patient-card .game-actions { justify-content: flex-start; }
+  .experience-progress-badge { right: 10px; bottom: 10px; }
+}
