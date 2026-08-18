@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const currentUrl = `${window.location.origin}${window.location.pathname}`;
+  const currentUrl = 'https://mrgray17.github.io/portfolio/';
   const title = 'El Yazid Hammoubel | Software Engineering Student | Full-Stack & Systems';
   const description = 'Engineering student at ENSA Kénitra building backend, full-stack and systems projects with Python, C, JavaScript, TypeScript, SQL, React, Node.js and PostgreSQL.';
 
