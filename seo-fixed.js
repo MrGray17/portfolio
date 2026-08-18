@@ -1,7 +1,11 @@
 (() => {
   'use strict';
 
-  const currentUrl = 'https://mrgray17.github.io/portfolio/';
+  const productionUrl = 'https://mrgray17.github.io/portfolio/';
+  const isLocal = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+  const currentUrl = isLocal
+    ? `${window.location.origin}${window.location.pathname}`
+    : productionUrl;
   const title = 'El Yazid Hammoubel | Software Engineering Student | Full-Stack & Systems';
   const description = 'Engineering student at ENSA Kénitra building backend, full-stack and systems projects with Python, C, JavaScript, TypeScript, SQL, React, Node.js and PostgreSQL.';
 
@@ -38,6 +42,7 @@
       jobTitle: 'Software Engineering Student',
       email: 'hammoubelyazid@gmail.com',
       telephone: '+212 649247160',
+      url: productionUrl,
       address: {
         '@type': 'PostalAddress',
         addressLocality: 'Kenitra',
