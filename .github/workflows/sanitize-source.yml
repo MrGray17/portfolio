@@ -1,0 +1,40 @@
+name: Sanitize Legacy Source
+
+on:
+  push:
+    branches: [portfolio-experience-safe]
+    paths:
+      - 'scripts/sanitize_legacy_source.py'
+      - '.github/workflows/sanitize-source.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sanitize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: portfolio-experience-safe
+
+      - name: Sanitize original source
+        run: python3 scripts/sanitize_legacy_source.py
+
+      - name: Verify forbidden legacy claims are gone
+        run: |
+          ! grep -E 'Neuro-Mesh|AEGIS|eBPF|AI Threat Detection|99\.91%|sub-100ms|12K\+ lines|PBFT|NFQUEUE|marjo-ballabani|github\.com/hammoubelyazid|hammoubelyazid\.com|-55% à -90%' original.html
+
+      - name: Commit sanitized source
+        run: |
+          git config user.name 'portfolio-qa-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add original.html
+          if git diff --cached --quiet; then
+            echo 'No source changes needed.'
+          else
+            git commit -m 'chore: sanitize legacy portfolio source'
+            git push origin HEAD:portfolio-experience-safe
+          fi
