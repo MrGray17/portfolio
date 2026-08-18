@@ -24,7 +24,10 @@
   }
 
   function skillBox(iconClass, title, values, highlight = false) {
-    const box = el('div', { className: `skill-box${highlight ? ' highlight-box' : ''}` });
+    // The original stylesheet initializes .skill-box at opacity: 0 and only reveals
+    // cards carrying .fade-in. These cards are created after the original observer
+    // has already run, so give them the reveal class at creation time.
+    const box = el('div', { className: `skill-box fade-in${highlight ? ' highlight-box' : ''}` });
     const header = el('div', { className: 'skill-box-header' });
     header.append(el('i', { className: `${iconClass} skill-icon-large` }), el('h3', { className: 'skill-box-title', text: title }));
     box.append(header, tags(values));
