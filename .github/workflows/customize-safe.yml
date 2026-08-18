@@ -1,0 +1,259 @@
+name: Customize portfolio safely
+
+on:
+  push:
+    branches: [portfolio-experience-safe]
+
+permissions:
+  contents: write
+
+jobs:
+  customize:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: portfolio-experience-safe
+
+      - name: Personalize content without changing layout structure
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          path = Path('index.html')
+          text = path.read_text(encoding='utf-8')
+
+          def sub_once(pattern, replacement, label, flags=0):
+              global text
+              text2, n = re.subn(pattern, replacement, text, count=1, flags=flags)
+              if n != 1:
+                  raise RuntimeError(f'{label}: expected 1 match, got {n}')
+              text = text2
+
+          # Public positioning / SEO — remove old security/eBPF template claims.
+          text = re.sub(r'<title>.*?</title>', '<title>El Yazid Hammoubel | Software Engineering Student | Full-Stack & Systems</title>', text, count=1)
+          text = re.sub(r'<meta name="title" content="[^"]*">', '<meta name="title" content="El Yazid Hammoubel | Software Engineering Student | Full-Stack & Systems">', text, count=1)
+          text = re.sub(r'<meta name="description" content="[^"]*">', '<meta name="description" content="Engineering student at ENSA Kénitra building real backend, full-stack and systems projects with TypeScript, JavaScript, Python, C and SQL.">', text, count=1)
+          text = re.sub(r'<meta name="keywords" content="[^"]*">', '<meta name="keywords" content="El Yazid Hammoubel, software engineering, TypeScript, JavaScript, Python, C, SQL, HTML, CSS, Node.js, Express, React, PostgreSQL, ENSA Kenitra">', text, count=1)
+          text = re.sub(r'<meta property="og:description" content="[^"]*">', '<meta property="og:description" content="Engineering student building real backend, full-stack and systems projects.">', text, count=1)
+          text = re.sub(r'<meta property="twitter:description" content="[^"]*">', '<meta property="twitter:description" content="Engineering student building real backend, full-stack and systems projects.">', text, count=1)
+          text = text.replace('https://github.com/hammoubelyazid', 'https://github.com/MrGray17')
+          text = re.sub(r'\s*"telephone": "[^"]*",\n', '\n', text, count=1)
+          text = re.sub(r'"knowsAbout": \[[^\]]*\]', '"knowsAbout": ["Software Engineering", "Full-Stack Development", "Backend Engineering", "Systems", "Networks", "Python", "C", "JavaScript", "TypeScript", "HTML", "CSS", "SQL", "Node.js", "Express", "React", "PostgreSQL", "Git", "Linux"]', text, count=1)
+
+          # Remove award ribbon inherited from the original template author.
+          sub_once(r'\n\s*<!-- Awwwards Ribbon -->.*?</div>\s*\n\s*<!-- Loading Screen -->', '\n\n    <!-- Loading Screen -->', 'Awwwards ribbon', re.S)
+
+          # Hero: keep structure/animation classes, change only copy and genuine stack.
+          sub_once(
+              r'<p class="hero-description">.*?</p>',
+              '''<p class="hero-description">
+                    I'm an engineering student at ENSA Kénitra who learns by building. I care about what sits underneath the abstraction — APIs, databases, networks, runtimes and the trade-offs that make software hold up in the real world.
+                </p>''',
+              'hero description', re.S
+          )
+          text = text.replace('<div class="deco-label">Full-Stack & Systems</div>', '<div class="deco-label">BUILD • BREAK • UNDERSTAND</div>')
+          # Do not publish a personal phone number in the public portfolio.
+          text = re.sub(r'\s*<a href="tel:[^"]*" class="social-btn" title="Phone">.*?</a>', '', text, count=1, flags=re.S)
+
+          sub_once(
+              r'<div class="tech-badges">.*?</div>',
+              '''<div class="tech-badges">
+            <span class="tech-badge"><i class="fab fa-python"></i> Python</span>
+            <span class="tech-badge"><i class="fas fa-code"></i> C</span>
+            <span class="tech-badge"><i class="fab fa-js"></i> JavaScript</span>
+            <span class="tech-badge"><i class="fab fa-js"></i> TypeScript</span>
+            <span class="tech-badge"><i class="fab fa-html5"></i> HTML</span>
+            <span class="tech-badge"><i class="fab fa-css3-alt"></i> CSS</span>
+            <span class="tech-badge"><i class="fas fa-database"></i> SQL</span>
+            <span class="tech-badge"><i class="fab fa-node-js"></i> Node.js / Express</span>
+            <span class="tech-badge"><i class="fab fa-react"></i> React</span>
+            <span class="tech-badge"><i class="fas fa-database"></i> PostgreSQL</span>
+            <span class="tech-badge"><i class="fab fa-git-alt"></i> Git / GitHub</span>
+            <span class="tech-badge"><i class="fab fa-linux"></i> Linux & Networks</span>
+        </div>''',
+              'hero tech badges', re.S
+          )
+
+          # Journey — preserve book/map mechanics, replace fake project jobs with real education/work/building.
+          text = text.replace(
+              'Engineering degree program focusing on network architecture, telecommunications, cybersecurity, and distributed systems.',
+              'Engineering program spanning networks, telecommunications, databases, algorithms, systems and software engineering.'
+          )
+          sub_once(
+              r'<div class="timeline-item-flat" id="exp-2".*?</div>\s*</div>',
+              '''<div class="timeline-item-flat" id="exp-2" data-country="Morocco">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content-flat">
+                        <h4 class="timeline-title">Engineering Internship @ Atos</h4>
+                        <p class="timeline-date">2026</p>
+                        <p class="timeline-description">
+                            Worked on automation around a Maroc Telecom Jira workflow, including an AI-assisted component with Llama 3 and PostgreSQL-backed data handling.
+                        </p>
+                        <p class="timeline-location"><i class="fas fa-map-marker-alt"></i> Morocco</p>
+                    </div>
+                </div>''',
+              'journey Atos', re.S
+          )
+          sub_once(
+              r'<div class="timeline-item-flat" id="exp-3".*?</div>\s*</div>',
+              '''<div class="timeline-item-flat" id="exp-3" data-country="Morocco">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content-flat">
+                        <h4 class="timeline-title">Building in Public — Rate Limiter · Maw3id · OpenToken</h4>
+                        <p class="timeline-date">2026 - Present</p>
+                        <p class="timeline-description">
+                            Turning theory into real engineering output across backend systems, a full-stack clinic product, testing, databases and AI tooling.
+                        </p>
+                        <p class="timeline-location"><i class="fas fa-map-marker-alt"></i> Morocco</p>
+                    </div>
+                </div>''',
+              'journey projects', re.S
+          )
+
+          # Replace the decorative pirate overlay with the same portrait used on the home section.
+          text = text.replace(
+              '<img src="image/pirat.png" alt="Pirate" class="map-pirate-overlay" width="200" height="200" loading="lazy">',
+              '<img src="image/img3.jpg" alt="El Yazid Hammoubel" class="map-pirate-overlay" width="200" height="200" loading="lazy" style="object-fit: cover; border: 4px solid #000; box-shadow: 6px 6px 0 #000;">'
+          )
+
+          # Skills: keep the exact section/card vocabulary but only claim what is defensible.
+          skills = '''<section class="section" id="skills">
+            <h2 class="section-title">SKILLS</h2>
+
+            <div class="skills-grid-modern">
+                <div class="skill-box">
+                    <div class="skill-box-header">
+                        <i class="fas fa-code skill-icon-large"></i>
+                        <h3 class="skill-box-title">Languages</h3>
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tag"><i class="fab fa-python"></i> Python</span>
+                        <span class="tag"><i class="fas fa-code"></i> C</span>
+                        <span class="tag"><i class="fab fa-js"></i> JavaScript</span>
+                        <span class="tag"><i class="fab fa-js"></i> TypeScript</span>
+                        <span class="tag"><i class="fas fa-database"></i> SQL</span>
+                        <span class="tag"><i class="fab fa-html5"></i> HTML</span>
+                        <span class="tag"><i class="fab fa-css3-alt"></i> CSS</span>
+                    </div>
+                </div>
+
+                <div class="skill-box">
+                    <div class="skill-box-header">
+                        <i class="fas fa-server skill-icon-large"></i>
+                        <h3 class="skill-box-title">Web & Backend</h3>
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tag"><i class="fab fa-node-js"></i> Node.js</span>
+                        <span class="tag"><i class="fas fa-server"></i> Express</span>
+                        <span class="tag"><i class="fab fa-react"></i> React</span>
+                        <span class="tag"><i class="fas fa-network-wired"></i> HTTP / REST</span>
+                        <span class="tag"><i class="fas fa-vial"></i> Testing</span>
+                    </div>
+                </div>
+
+                <div class="skill-box">
+                    <div class="skill-box-header">
+                        <i class="fas fa-database skill-icon-large"></i>
+                        <h3 class="skill-box-title">Data</h3>
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tag"><i class="fas fa-elephant"></i> PostgreSQL</span>
+                        <span class="tag"><i class="fas fa-database"></i> Relational Databases</span>
+                        <span class="tag"><i class="fas fa-table"></i> Database Design</span>
+                    </div>
+                </div>
+
+                <div class="skill-box highlight-box">
+                    <div class="skill-box-header">
+                        <i class="fas fa-tools skill-icon-large"></i>
+                        <h3 class="skill-box-title">Foundations & Tools</h3>
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tag"><i class="fab fa-git-alt"></i> Git / GitHub</span>
+                        <span class="tag"><i class="fab fa-linux"></i> Linux</span>
+                        <span class="tag"><i class="fas fa-network-wired"></i> Networks</span>
+                        <span class="tag"><i class="fas fa-terminal"></i> CLI</span>
+                        <span class="tag"><i class="fas fa-tasks"></i> Jira</span>
+                    </div>
+                </div>
+            </div>
+        </section>'''
+          sub_once(r'<section class="section" id="skills">.*?</section>(?=\s*<section class="section section-compact" id="projects">)', skills, 'skills section', re.S)
+
+          projects = '''<section class="section section-compact" id="projects">
+            <div class="creator-showcase">
+                <p class="creator-label">CURRENT BUILDS // CLICK THROUGH TO THE CODE</p>
+                <div class="creator-projects-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                    <div class="creator-item">
+                        <a href="https://github.com/MrGray17/rate-limiter" target="_blank" class="creator-project">
+                            <span class="creator-name"><i class="fas fa-gauge-high"></i> Rate Limiter</span>
+                        </a>
+                        <p class="creator-tagline">A TypeScript + Node.js rate limiter built from first principles. Fixed-window limiting, HTTP integration and tests today; more algorithms, distributed state and benchmarking next.</p>
+                        <a href="https://github.com/MrGray17/rate-limiter" target="_blank" class="creator-github"><i class="fab fa-github"></i> Inspect the code</a>
+                    </div>
+                    <div class="creator-item">
+                        <a href="https://github.com/MrGray17/Maw3id" target="_blank" class="creator-project">
+                            <span class="creator-name"><i class="fas fa-hospital-user"></i> Maw3id</span>
+                        </a>
+                        <p class="creator-tagline">A clinic queue platform built around the way Moroccan clinics actually operate: appointments, walk-ins, one live queue and nearby-doctor discovery. React + TypeScript, Express and PostgreSQL.</p>
+                        <a href="https://github.com/MrGray17/Maw3id" target="_blank" class="creator-github"><i class="fab fa-github"></i> Inspect the code</a>
+                    </div>
+                    <div class="creator-item">
+                        <a href="https://github.com/MrGray17/opentoken" target="_blank" class="creator-project">
+                            <span class="creator-name"><i class="fas fa-compress-alt"></i> OpenToken</span>
+                        </a>
+                        <p class="creator-tagline">Open-source TypeScript/Bun tooling exploring token compression for AI workflows, with automated type checking, linting and tests. The repo is the evidence; benchmarks will decide the claims.</p>
+                        <a href="https://github.com/MrGray17/opentoken" target="_blank" class="creator-github"><i class="fab fa-github"></i> Inspect the code</a>
+                    </div>
+                </div>
+            </div>
+        </section>'''
+          sub_once(r'<section class="section section-compact" id="projects">.*?</section>', projects, 'projects section', re.S)
+
+          # Contact positioning.
+          text = text.replace(
+              'Looking for an internship or collaboration in Cybersecurity & Systems Engineering',
+              'Open to software engineering internships, collaborations, and conversations about building interesting systems.'
+          )
+          text = re.sub(r'\s*<a href="tel:[^"]*" class="contact-card">.*?</a>', '', text, count=1, flags=re.S)
+          text = re.sub(r'\s*<a href="tel:[^"]*" title="Phone">.*?</a>', '', text, count=1, flags=re.S)
+
+          # Journey map popup data — same map, now reflecting the actual journey.
+          old_map = '''                    {
+                        city: 'Kenitra',
+                        company: 'Neuro-Mesh & AEGIS',
+                        period: '2024 - Present',
+                        role: 'Security Fabric & AI Systems Lead'
+                    }'''
+          new_map = '''                    {
+                        city: 'Morocco',
+                        company: 'Atos',
+                        period: '2026',
+                        role: 'Engineering Internship — Maroc Telecom Jira Automation'
+                    },
+                    {
+                        city: 'Kenitra',
+                        company: 'Rate Limiter · Maw3id · OpenToken',
+                        period: '2026 - Present',
+                        role: 'Independent Software Projects'
+                    }'''
+          if old_map not in text:
+              raise RuntimeError('map experience block not found')
+          text = text.replace(old_map, new_map, 1)
+
+          path.write_text(text, encoding='utf-8')
+
+      - name: Commit safe personalization
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "feat: personalize portfolio sections without changing layout"
+            git push origin portfolio-experience-safe
+          fi
