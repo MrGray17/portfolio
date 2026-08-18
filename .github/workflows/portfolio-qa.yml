@@ -36,7 +36,7 @@ jobs:
           node --check tests/portfolio.spec.js
 
       - name: Install Chromium
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install chromium
 
       - name: Run launch QA
         run: npm test
