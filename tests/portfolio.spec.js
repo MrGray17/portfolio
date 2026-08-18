@@ -162,7 +162,7 @@ test('mobile layout has no horizontal overflow and game modal stays inside viewp
   await expectCleanRuntime(state);
 });
 
-test('terminal exposes only real profile data and no template/API-key residue', async ({ page, request }) => {
+test('terminal and raw public source contain only launch-safe profile data', async ({ page, request }) => {
   const state = diagnostics(page);
   await page.goto('/terminal.html', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('#output')).toContainText('El Yazid Hammoubel');
@@ -201,12 +201,31 @@ test('terminal exposes only real profile data and no template/API-key residue', 
   expect(scriptText).not.toContain('Neuro-Mesh');
   expect(scriptText).not.toContain('[COMPANY A]');
 
+  const indexResponse = await request.get('/index.html');
+  expect(indexResponse.ok()).toBeTruthy();
+  const indexText = await indexResponse.text();
+  for (const forbidden of [
+    'Neuro-Mesh', 'AEGIS', 'eBPF', 'AI Threat Detection', '99.91%', 'sub-100ms',
+    '12K+ lines', 'PBFT', 'NFQUEUE', 'marjo-ballabani', 'github.com/hammoubelyazid',
+    'hammoubelyazid.com', '-55% à -90%'
+  ]) {
+    expect(indexText).not.toContain(forbidden);
+  }
+  expect(indexText).not.toContain("fetch('original.html");
+  expect(indexText).not.toContain('document.write(');
+  expect(indexText).toContain('personalize-fixed.js');
+  expect(indexText).toContain('games-fixed.js');
+
+  const original = await request.get('/original.html');
+  expect(original.status()).toBe(404);
   const cname = await request.get('/CNAME');
   expect(cname.status()).toBe(404);
   const sitemap = await request.get('/sitemap.xml');
   expect(sitemap.status()).toBe(404);
   const robots = await request.get('/robots.txt');
-  expect(await robots.text()).toContain('Disallow: /original.html');
+  const robotsText = await robots.text();
+  expect(robotsText).toContain('Allow: /');
+  expect(robotsText).not.toContain('Disallow: /original.html');
 
   await expectCleanRuntime(state);
 });
