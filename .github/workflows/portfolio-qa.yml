@@ -31,6 +31,7 @@ jobs:
           node --check personalize-fixed.js
           node --check seo-fixed.js
           node --check games-fixed.js
+          node --check game-ui-stability.js
           node --check script.js
           node --check playwright.config.js
           node --check tests/portfolio.spec.js
