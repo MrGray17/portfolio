@@ -1,5 +1,6 @@
 name: Deploy Portfolio to GitHub Pages
 
+# Pages is enabled; touching this workflow triggers a fresh post-enable production deploy.
 on:
   push:
     branches: [main]
