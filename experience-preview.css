@@ -1,11 +1,9 @@
 body.experience-open { overflow: hidden; }
 
+/* Keep the journey map clean: no pirate image and no profile photo overlay. */
+.map-pirate-overlay,
 .map-profile-overlay {
-  object-fit: cover !important;
-  object-position: center !important;
-  border: 4px solid #000 !important;
-  box-shadow: 6px 6px 0 #000 !important;
-  border-radius: 0 !important;
+  display: none !important;
 }
 
 .experience-project-grid {
