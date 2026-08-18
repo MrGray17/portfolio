@@ -1,0 +1,42 @@
+name: Promote Static Index
+
+on:
+  push:
+    branches: [portfolio-experience-safe]
+    paths:
+      - 'scripts/promote_static_index.py'
+      - '.github/workflows/promote-static-index.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: portfolio-experience-safe
+
+      - name: Promote cleaned source to index
+        run: python3 scripts/promote_static_index.py
+
+      - name: Verify production shape
+        run: |
+          test -f index.html
+          test ! -f original.html
+          grep -q 'games-fixed.js' index.html
+          grep -q 'personalize-fixed.js' index.html
+          ! grep -q "fetch('original.html" index.html
+          ! grep -q 'document.write(' index.html
+          ! grep -E 'Neuro-Mesh|AEGIS|eBPF|AI Threat Detection|99\.91%|sub-100ms|12K\+ lines|PBFT|NFQUEUE|marjo-ballabani|github\.com/hammoubelyazid|hammoubelyazid\.com|-55% à -90%' index.html
+
+      - name: Commit production-shaped index
+        run: |
+          git config user.name 'portfolio-qa-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add index.html original.html robots.txt
+          git commit -m 'refactor: promote cleaned portfolio to static index'
+          git push origin HEAD:portfolio-experience-safe
