@@ -40,15 +40,32 @@
 
     status.append(category, signal);
 
-    const projectTitle = document.createElement('div');
+    const projectTitle = document.createElement('a');
     projectTitle.className = 'creator-project';
+    projectTitle.href = 'https://github.com/MrGray17/Launchpad';
+    projectTitle.target = '_blank';
+    projectTitle.rel = 'noreferrer';
+    projectTitle.title = 'Open Launchpad on GitHub';
+    projectTitle.setAttribute('aria-label', 'Open Launchpad on GitHub');
 
     const name = document.createElement('span');
     name.className = 'creator-name';
+    name.style.display = 'inline-flex';
+    name.style.alignItems = 'center';
+    name.style.gap = '0.35em';
 
-    const icon = document.createElement('i');
-    icon.className = 'fas fa-rocket';
-    name.append(icon, document.createTextNode(' Launchpad'));
+    const icon = document.createElement('img');
+    icon.src = 'https://raw.githubusercontent.com/MrGray17/Launchpad/main/src-tauri/icons/64x64.png';
+    icon.alt = '';
+    icon.setAttribute('aria-hidden', 'true');
+    icon.width = 48;
+    icon.height = 48;
+    icon.style.width = '1em';
+    icon.style.height = '1em';
+    icon.style.objectFit = 'contain';
+    icon.style.flex = '0 0 auto';
+
+    name.append(icon, document.createTextNode('Launchpad'));
     projectTitle.append(name);
 
     const description = document.createElement('p');
